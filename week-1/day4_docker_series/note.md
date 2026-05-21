@@ -1,1 +1,0 @@
-# 📅 Day 3: Build Own Your Image
