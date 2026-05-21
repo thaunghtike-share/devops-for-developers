@@ -1,0 +1,18 @@
+name: Scheduled Health Check
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run scheduled task
+        run: |
+          echo "Running scheduled workflow..."
+          echo "Current UTC time: $(date -u)"
+          echo "Checking application health..."
+          echo "Application is healthy."

@@ -1,0 +1,57 @@
+name: Manual Docker Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: "Choose Docker service to build"
+        required: true
+        default: "integration"
+        type: choice
+        options:
+          - frontend
+          - backend
+          - integration
+      push_image:
+        description: "Push image to ACR?"
+        required: true
+        default: false
+        type: boolean
+
+env:
+  ACR_REGISTRY: learndevopsnow.azurecr.io
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set Docker variables
+        run: |
+          echo "APP_NAME=${{ inputs.service }}-app" >> $GITHUB_ENV
+          echo "DOCKERFILE=apps/${{ inputs.service }}/Dockerfile" >> $GITHUB_ENV
+
+      - name: Login to Azure Container Registry
+        if: ${{ inputs.push_image == true }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.ACR_REGISTRY }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image Only
+        if: ${{ inputs.push_image == false }}
+        run: |
+          docker buildx build             --platform linux/amd64             -f $DOCKERFILE             -t $ACR_REGISTRY/$APP_NAME:${IMAGE_TAG::7}             .
+
+      - name: Build & Push Docker Image
+        if: ${{ inputs.push_image == true }}
+        run: |
+          docker buildx build             --platform linux/amd64             --push             -f $DOCKERFILE             -t $ACR_REGISTRY/$APP_NAME:${IMAGE_TAG::7}             .

@@ -1,0 +1,26 @@
+name: Branch and Path Filters
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "apps/frontend/**"
+      - "apps/backend/**"
+      - "docs/**"
+      - ".github/workflows/03-branch-path-filters.yml"
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show changed files
+        run: |
+          echo "This workflow only runs on main/develop"
+          echo "It only triggers when selected paths are changed."
+          echo "Branch: $GITHUB_REF_NAME"
