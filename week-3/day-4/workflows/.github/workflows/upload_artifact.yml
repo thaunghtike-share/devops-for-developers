@@ -1,17 +1,16 @@
-name: Artifacts and Cache
+name: Upload Build Artifact
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
-  build-with-cache:
+  build-and-upload:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -23,14 +22,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
-        run: |
-          npm run build
-          mkdir -p build
-          echo "Build created from commit $GITHUB_SHA" > build/build-info.txt
+      - name: Build application
+        run: npm run build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-build
-          path: build/
+          name: nodejs-build
+          path: dist/

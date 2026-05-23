@@ -1,0 +1,45 @@
+name: Branch Based Docker Image Build
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+env:
+  ACR_REGISTRY: learndevopsnow.azurecr.io
+  APP_NAME: myapp
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set image tag by branch
+        run: |
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            echo "IMAGE_TAG=prod-${GITHUB_SHA::7}" >> $GITHUB_ENV
+          elif [ "$GITHUB_REF_NAME" = "dev" ]; then
+            echo "IMAGE_TAG=dev-${GITHUB_SHA::7}" >> $GITHUB_ENV
+          fi
+
+      - name: Login to Azure Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.ACR_REGISTRY }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        run: |
+          docker buildx build \
+            --platform linux/amd64 \
+            --push \
+            -t $ACR_REGISTRY/$APP_NAME:$IMAGE_TAG \
+            .
