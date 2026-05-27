@@ -16,8 +16,8 @@ env:
   AWS_REGION: ap-southeast-1
   ECR_REPOSITORY: learndevopsnow
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-  AWS_ROLE_NAME: github-actions-ecr-role
-  IMAGE_NAME: flask-demo-app
+  AWS_ROLE_NAME: github-actions-ecs-role
+  IMAGE_NAME: ecs-lab
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
@@ -67,3 +67,12 @@ jobs:
             -f Dockerfile \
             -t ${{ steps.image.outputs.image_uri }} \
             .
+
+      - name: Dummy ECS Deploy Stage
+        run: |
+          echo "ECS deploy dummy stage only"
+          echo "Target Stage: ${{ steps.stage.outputs.target_stage }}"
+          echo "Image URI: ${{ steps.image.outputs.image_uri }}"
+          echo "Later ECS lesson will add:"
+          echo "aws ecs register-task-definition"
+          echo "aws ecs update-service"
