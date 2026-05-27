@@ -4,8 +4,6 @@ This setup allows GitHub Actions to securely push Docker images to AWS ECR using
 
 Instead of storing long-term AWS Access Keys inside GitHub Secrets, GitHub Actions will request temporary AWS credentials and assume an IAM Role.
 
----
-
 # Step 1 - Set Environment Variables
 
 ```bash
