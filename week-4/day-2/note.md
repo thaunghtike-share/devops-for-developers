@@ -194,6 +194,91 @@ Check:
 
 ---
 
+# AWS OIDC Cleanup Commands
+
+# Delete Inline ECS PassRole Policy
+
+```bash
+aws iam delete-role-policy \
+  --role-name github-actions-ecs-role \
+  --policy-name AllowPassRoleForECS
+```
+
+---
+
+# Detach ECR Policy
+
+```bash
+aws iam detach-role-policy \
+  --role-name github-actions-ecs-role \
+  --policy-arn arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser
+```
+
+---
+
+# Detach ECS Policy
+
+```bash
+aws iam detach-role-policy \
+  --role-name github-actions-ecs-role \
+  --policy-arn arn:aws:iam::aws:policy/AmazonECS_FullAccess
+```
+
+---
+
+# Delete IAM Role
+
+```bash
+aws iam delete-role \
+  --role-name github-actions-ecs-role
+```
+
+---
+
+# List OIDC Providers
+
+```bash
+aws iam list-open-id-connect-providers
+```
+
+---
+
+# Delete GitHub OIDC Provider
+
+```bash
+aws iam delete-open-id-connect-provider \
+  --open-id-connect-provider-arn arn:aws:iam::265193792623:oidc-provider/token.actions.githubusercontent.com
+```
+
+---
+
+# Verify IAM Role Cleanup
+
+```bash
+aws iam get-role \
+  --role-name github-actions-ecs-role
+```
+
+Expected Output:
+
+```text
+NoSuchEntity
+```
+
+---
+
+# Verify OIDC Provider Cleanup
+
+```bash
+aws iam list-open-id-connect-providers
+```
+
+Expected Result:
+
+```text
+GitHub OIDC provider should not appear in the list.
+```
+
 # Important Notes
 
 ## Local Docker Login
