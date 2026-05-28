@@ -19,7 +19,6 @@ env:
   ECR_REPOSITORY: learndevopsnow
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   AWS_ROLE_NAME: github-actions-ecs-role
-  IMAGE_NAME: ecs-lab
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
@@ -46,7 +45,7 @@ jobs:
           SHORT_SHA="${IMAGE_TAG::7}"
           TARGET_STAGE="${{ steps.stage.outputs.target_stage }}"
 
-          IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_NAME-$TARGET_STAGE"
+          IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$TARGET_STAGE-$SHORT_SHA"
 
           echo "image_uri=$IMAGE_URI" >> $GITHUB_OUTPUT
 
