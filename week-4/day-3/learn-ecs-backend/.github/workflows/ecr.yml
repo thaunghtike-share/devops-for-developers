@@ -1,0 +1,77 @@
+name: Docker CI - Build And Push To ECR
+
+on:
+  push:
+    branches:
+      - dev
+      - uat
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ap-southeast-1
+  ECR_REPOSITORY: learn-ecs-backend
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ROLE_NAME: github-actions-ecs-role
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  docker-ci:
+    name: Docker Build And Push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Target Stage
+        id: stage
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "target_stage=prod" >> $GITHUB_OUTPUT
+          else
+            echo "target_stage=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set Image URI
+        id: image
+        run: |
+          SHORT_SHA="${IMAGE_TAG::7}"
+          TARGET_STAGE="${{ steps.stage.outputs.target_stage }}"
+          IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$TARGET_STAGE-$SHORT_SHA"
+
+          echo "image_uri=$IMAGE_URI" >> $GITHUB_OUTPUT
+
+      - name: Configure AWS Credentials Using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE_NAME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login To Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set Up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build And Push Docker Image
+        run: |
+          docker buildx build \
+            --platform linux/amd64 \
+            --push \
+            -f Dockerfile \
+            -t ${{ steps.image.outputs.image_uri }} \
+            .
+
+      - name: Dummy ECS Deploy Stage
+        run: |
+          echo "ECS deploy dummy stage only"
+          echo "Target Stage: ${{ steps.stage.outputs.target_stage }}"
+          echo "Image URI: ${{ steps.image.outputs.image_uri }}"
+          echo "Later ECS lesson will add:"
+          echo "aws ecs register-task-definition"
+          echo "aws ecs update-service"

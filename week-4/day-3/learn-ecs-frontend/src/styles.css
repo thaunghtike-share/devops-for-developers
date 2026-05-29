@@ -1,0 +1,368 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(37, 99, 235, 0.18), transparent 28%),
+    radial-gradient(circle at 86% 8%, rgba(99, 102, 241, 0.16), transparent 28%),
+    linear-gradient(135deg, #f8fafc 0%, #eef4ff 46%, #ffffff 100%);
+  color: #0f172a;
+}
+
+.page {
+  width: min(1160px, 92%);
+  margin: 0 auto;
+  padding: 34px 0 42px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 34px;
+}
+
+.brandTitle {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  color: #08133f;
+}
+
+.brandSubtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
+.statusPill {
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  font-size: 14px;
+  font-weight: 800;
+  color: #1d4ed8;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  white-space: nowrap;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.panel {
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: 0 26px 80px rgba(15, 23, 42, 0.10);
+  backdrop-filter: blur(16px);
+}
+
+.intro {
+  padding: 44px;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #e0ecff;
+  color: #1d4ed8;
+  font-weight: 900;
+  letter-spacing: 0.055em;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 22px 0 16px;
+  font-size: clamp(42px, 5.8vw, 72px);
+  line-height: 0.96;
+  letter-spacing: -0.075em;
+  color: #07133f;
+}
+
+h1 span {
+  background: linear-gradient(135deg, #0737ff, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.desc {
+  max-width: 590px;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.72;
+  color: #475569;
+  font-weight: 500;
+}
+
+.apiBox {
+  margin-top: 22px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: #f8fbff;
+  border: 1px solid #dbeafe;
+}
+
+.apiLabel {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+code {
+  color: #1d4ed8;
+  font-weight: 800;
+  word-break: break-all;
+}
+
+.architecture,
+.stats {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.archCard,
+.statBox {
+  padding: 20px;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.05);
+}
+
+.archCard svg {
+  color: #1d4ed8;
+  margin-bottom: 12px;
+}
+
+.archCard strong {
+  display: block;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+.archCard small,
+.statLabel {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 800;
+}
+
+.statNumber {
+  font-size: 36px;
+  font-weight: 900;
+  color: #1237d8;
+  letter-spacing: -0.055em;
+}
+
+.formPanel {
+  padding: 34px;
+}
+
+h2 {
+  margin: 0 0 8px;
+  font-size: 31px;
+  letter-spacing: -0.045em;
+  color: #091642;
+}
+
+.muted {
+  margin: 0 0 24px;
+  color: #64748b;
+  line-height: 1.65;
+  font-weight: 500;
+}
+
+label {
+  display: block;
+  margin: 16px 0 8px;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 850;
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid #dbe3f0;
+  border-radius: 18px;
+  padding: 15px 16px;
+  outline: none;
+  font-size: 15px;
+  background: #ffffff;
+  color: #0f172a;
+  font-family: inherit;
+  font-weight: 600;
+}
+
+input:focus,
+select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 900;
+  border-radius: 18px;
+  transition: 0.18s ease;
+}
+
+.submitBtn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 16px;
+  font-size: 16px;
+  color: white;
+  background: linear-gradient(135deg, #0737ff, #061b73);
+  box-shadow: 0 18px 38px rgba(37, 99, 235, 0.28);
+}
+
+.submitBtn:hover {
+  transform: translateY(-1px);
+}
+
+.message {
+  min-height: 24px;
+  margin-top: 15px;
+  font-weight: 850;
+}
+
+.success {
+  color: #16a34a;
+}
+
+.error {
+  color: #dc2626;
+}
+
+.usersSection {
+  margin-top: 28px;
+  padding: 30px;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.refreshBtn,
+.deleteBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 15px;
+}
+
+.refreshBtn {
+  color: #1d4ed8;
+  background: #e0ecff;
+}
+
+.userGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.userItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  padding: 17px;
+  border-radius: 20px;
+  background: #f8fbff;
+  border: 1px solid #e2e8f0;
+}
+
+.userName {
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.userMeta {
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.role {
+  display: inline-flex;
+  margin-top: 8px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #e0ecff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.deleteBtn {
+  color: #dc2626;
+  background: #fee2e2;
+  white-space: nowrap;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 28px;
+  color: #64748b;
+  font-weight: 750;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .architecture,
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .intro {
+    min-height: auto;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .userItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
