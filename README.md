@@ -1,204 +1,148 @@
-# DevOps for Developers
-## 3-Month Mentorship Program
+# 🚀 DevOps For Developers Program
 
-> From Code → CI/CD → Kubernetes → Production Workflow
-
----
-
-# Program Overview 
-
-| Item | Details |
-|---|---|
-| Duration | 12 Weeks |
-| Sessions | 36 Sessions |
-| Schedule | 3 Days / Week |
-| Session Length | 1 Hour / Session |
-| Learning Style | Hands-on Practical Learning |
+**Focus:** Docker, CI/CD, Kubernetes, GitOps, Terraform, Platform Engineering and Modern DevOps Workflow
 
 ---
 
-# Week 1 — Docker (Developer Workflow)
+# 📅 Month 1: Containers & CI/CD
 
-## Topics
-- Build → run → debug containers
-- Production Dockerfile (multi-stage builds)
-- Multi-service apps using Docker Compose
+## Week 1: Docker Fundamentals
 
-## Learning Outcome
-Students will understand container-based development workflow and run real applications using Docker.
+* Containers
+* Images
+* Docker CLI
+* Dockerfile
 
----
+## Week 2: Advanced Docker
 
-# Week 2 — CI/CD Core
+* Docker Compose
+* Multi Stage Builds
+* Production Images
+* Trivy Image Scan
 
-## Topics
-- Pipeline design (build → test → deploy)
-- GitHub Actions workflow
-- Build & push Docker images
+## Week 3: CI/CD Fundamentals
 
-## Learning Outcome
-Students will build real CI/CD pipelines for modern application deployment.
+* GitHub Actions
+* Workflow Events
+* Runners
+* GitHub Secrets
 
----
+## Week 4: Production CI/CD
 
-# Week 3 — Secrets Management
-
-## Topics
-- GitHub Actions secrets
-- Azure Key Vault basics
-- Inject secrets into applications
-
-## Learning Outcome
-Students will learn secure secret management for production systems.
+* Docker Build
+* AWS ECR
+* Release Workflow
+* Deployment Strategies
 
 ---
 
-# Week 4 — Cloud & Runtime Basics
+# 📅 Month 2: Kubernetes & GitOps
 
-## Topics
-- Cloud fundamentals (compute, networking)
-- Azure Container Apps & Azure Container Service concepts (similar to AWS ECS)
-- App deployment (VM / App Service)
-- Linux for DevOps (logs, process, ports)
+## Week 5: Kubernetes Fundamentals
 
-## Learning Outcome
-Students will gain practical cloud and Linux knowledge required for DevOps engineering.
+* Pods
+* Deployments
+* Services
+* ConfigMaps
 
----
+## Week 6: Kubernetes Workloads
 
-# Week 5 — Kubernetes Core + AKS
+* StatefulSets
+* Storage
+* Ingress
+* Helm
 
-## Topics
-- Kubernetes architecture (control plane, nodes)
-- Pods, Deployments, Services
-- AKS intro & kubectl usage
+## Week 7: GitOps
 
-## Learning Outcome
-Students will understand Kubernetes core architecture and cluster operations.
+* ArgoCD
+* App Of Apps
+* Sync Strategies
+* Image Updater
 
----
+## Week 8: Kubernetes Secret Management
 
-# Week 6 — Application Deployment
-
-## Topics
-- Deploy applications to Kubernetes
-- Rolling updates & rollback
-- ConfigMaps & Secrets
-
-## Learning Outcome
-Students will deploy production-ready workloads into Kubernetes.
+* Kubernetes Secrets
+* HashiCorp Vault
+* External Secrets
+* Secret Rotation
 
 ---
 
-# Week 7 — Production Readiness
+# 📅 Month 3: Observability & Security
 
-## Topics
-- Liveness & readiness probes
-- Resource limits & autoscaling
-- Debugging (logs, exec, describe)
+## Week 9: Observability & Monitoring
 
-## Learning Outcome
-Students will learn how to operate Kubernetes workloads safely in production.
+* Prometheus
+* Grafana
+* Loki
+* AlertManager
 
----
+## Week 10: Kubernetes Security
 
-# Week 8 — Helm & Ingress
+* RBAC
+* Service Accounts
+* Network Policies
+* Pod Security Standards
 
-## Topics
-- Helm charts (structure & reuse)
-- Environment configs (Dev/UAT/Prod)
-- Ingress + domain + TLS (Cert Manager)
+## Week 11: Istio
 
-## Learning Outcome
-Students will package and expose Kubernetes applications using production practices.
+* Service Mesh
+* Gateway
+* Virtual Service
+* Traffic Management
 
----
+## Week 12: Terraform Fundamentals
 
-# Week 9 — GitOps (ArgoCD)
-
-## Topics
-- GitOps workflow (Git = source of truth)
-- Deploy with ArgoCD
-- Multi-environment setup (Dev / UAT / Prod)
-
-## Learning Outcome
-Students will learn GitOps deployment workflow used in modern Kubernetes platforms.
+* Providers
+* Resources
+* Variables
+* Outputs
 
 ---
 
-# Week 10 — Azure DevOps Session
+# 📅 Month 4: Platform Engineering & Automation
 
-## Topics
-- Azure DevOps overview
-- Pipelines (CI/CD) with Azure DevOps
-- Boards, Repos, Artifacts, Environments
+## Week 13: Terraform State Management
 
-## Learning Outcome
-Students will understand Azure DevOps ecosystem and enterprise workflow.
+* Remote State
+* State Locking
+* Data Sources
+* Terraform Best Practices
 
----
+## Week 14: Terraform Automation
 
-# Week 11 — Observability
+* GitHub OIDC
+* AWS OIDC
+* Terraform In CI/CD
+* Multi Environment Strategy
 
-## Topics
-- Logging (application + container)
-- Prometheus metrics
-- Grafana dashboards
+## Week 15: Platform Engineering With Terraform
 
-## Learning Outcome
-Students will monitor and troubleshoot applications using modern observability tools.
+* Azure AKS
+* AWS EKS
+* Azure Key Vault
+* GitHub OIDC
 
----
+## Week 16: HCP Terraform
 
-# Week 12 — Terraform Basic
-
-## Topics
-- IaC basics (Terraform intro)
-- Create simple cloud resources
-- Use Terraform in CI/CD workflow
-
-## Learning Outcome
-Students will understand Infrastructure as Code and automate cloud infrastructure deployment.
+* Workspaces
+* Variable Sets
+* Remote Execution
+* Team Collaboration
 
 ---
 
-# What You Will Achieve
+# 🎯 What You Will Build
 
-- Build real CI/CD pipelines
-- Deploy applications to Kubernetes (AKS)
-- Manage multi-environment deployments
-- Implement GitOps workflow
-- Understand modern DevOps architecture
+Throughout the program, students will build and deploy real applications using modern DevOps workflows.
 
----
-
-# Who Is This For?
-
-- Developers who want to level up
-- Backend / Full Stack Developers
-- Dev-minded engineers
-- Anyone wanting to deliver production-ready applications
+* Dockerized Applications
+* Production Ready CI/CD Pipelines
+* Kubernetes Deployments
+* GitOps Workflows With ArgoCD
+* Secret Management Solutions
+* Monitoring & Logging Stack
+* Terraform Infrastructure Automation
+* Platform Engineering Workflows
 
 ---
-
-# What You Will Get
-
-- Hands-on practical sessions
-- Real-world projects
-- Expert mentorship
-- Career guidance & support
-
----
-
-# Contact
-
-## Learn DevOps Now - Myanmar
-
-- Phone: 09952492359
-- Website: learndevopsnow-mm.blog
-
----
-
-# Motto
-
-> Learn. Build. Deploy. Succeed.
