@@ -1,0 +1,25 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/jammy64"
+
+  config.vm.define "control-plane" do |node|
+    node.vm.hostname = "control-plane"
+    node.vm.network "private_network", ip: "172.20.20.10"
+
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "kube-control-plane"
+      vb.memory = 4096
+      vb.cpus = 2
+    end
+  end
+
+  config.vm.define "worker" do |node|
+    node.vm.hostname = "worker"
+    node.vm.network "private_network", ip: "172.20.20.11"
+
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "kube-worker"
+      vb.memory = 2048
+      vb.cpus = 2
+    end
+  end
+end
