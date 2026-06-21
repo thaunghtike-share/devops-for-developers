@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptydir-demo
+  namespace: storage-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emptydir-demo
+  template:
+    metadata:
+      labels:
+        app: emptydir-demo
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          volumeMounts:
+            - name: app-storage
+              mountPath: /data
+      volumes:
+        - name: app-storage
+          emptyDir: {}

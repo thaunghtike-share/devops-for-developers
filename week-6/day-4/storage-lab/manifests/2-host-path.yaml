@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostpath-demo
+  namespace: storage-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostpath-demo
+  template:
+    metadata:
+      labels:
+        app: hostpath-demo
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          volumeMounts:
+            - name: host-storage
+              mountPath: /storage
+      volumes:
+        - name: host-storage
+          hostPath:
+            path: /data/hostpath-demo
+            type: DirectoryOrCreate
