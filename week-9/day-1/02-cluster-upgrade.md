@@ -135,6 +135,7 @@ kubectl get nodes -o wide
 control-plane:
 
 ```bash
+kubectl create deploy nginx --image=nginx --replicas=2
 kubectl get pods -o wide
 ```
 
