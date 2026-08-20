@@ -32,6 +32,49 @@ kubectl get pods --show-labels
 kubectl get rs
 ```
 
+## Rolling Update
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+```
+
+```bash
+vim nginx-deployment.yaml
+kubectl apply -f nginx-deployment.yaml
+watch kubectl get pods
+kubectl describe deployment nginx-deployment
+```
+
+```bash
+kubectl create deployment nginx-imperative --image=nginx:latest --replicas=2
+
+kubectl get deployments
+kubectl get pods
+kubectl get rs
+
+kubectl scale deployment nginx-imperative --replicas=4
+
+kubectl delete deployment nginx-imperative
+```
+
 ## ClusterIP Service
 
 ```yaml
@@ -54,14 +97,18 @@ vim nginx-clusterip.yaml
 kubectl apply -f nginx-clusterip.yaml
 kubectl get svc
 kubectl describe svc nginx-clusterip
+kubectl get pods -o wide
 ```
 
 ## ClusterIP Test
 
 ```bash
 kubectl run tester --image=busybox --restart=Never -- sleep 3600
+kubectl get pods
 kubectl exec -it tester -- sh
-wget -qO- http://nginx-clusterip.default.svc.cluster.local
+wget -qO- http://10.152.183.189 
+wget -qO- http://nginx-clusterip.default.svc
+kubectl delete pod tester --force
 exit
 ```
 
@@ -89,39 +136,6 @@ kubectl apply -f nginx-nodeport.yaml
 kubectl get svc
 kubectl describe svc nginx-nodeport
 curl http://<NODE_IP>:30080
-```
-
-## Rolling Upgrade
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-        - name: nginx
-          image: nginx:alpine
-          ports:
-            - containerPort: 80
-```
-
-```bash
-vim nginx-deployment-v2.yaml
-kubectl apply -f nginx-deployment-v2.yaml
-kubectl rollout status deployment/nginx-deployment
-kubectl set image deployment/nginx-deployment nginx=nginx:latest
-kubectl rollout status deployment/nginx-deployment
-kubectl get pods
 ```
 
 ## Scale
