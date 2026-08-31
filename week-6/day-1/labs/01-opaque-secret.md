@@ -6,8 +6,6 @@
 kubectl create namespace secret-lab
 ```
 
----
-
 ## Imperative Method
 
 ```bash
@@ -29,11 +27,9 @@ kubectl get secret app-secret -n secret-lab
 
 kubectl get secret app-secret -o yaml -n secret-lab
 
-echo "cGFzc3dvcmQxMjM=" | base64 
--d; echo
+echo "cGFzc3dvcmQxMjM=" | base64 -d; echo
 
-echo "bXktc2VjcmV0" | base64 -d; 
-echo
+echo "bXktc2VjcmV0" | base64 -d; echo
 
 kubectl get secret app-secret \
 -o jsonpath="{.data.DB_PASSWORD}" \
@@ -100,6 +96,7 @@ data:
 
 ```bash
 kubectl apply -f secret-data.yaml
+kubectl get secret app-secret-data -o yaml -n secret-lab
 ```
 
 ## Verify
