@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-second-app
+  labels:
+    app: my-second-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-second-app
+  template:
+    metadata:
+      labels:
+        app: my-second-app
+    spec: 
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
