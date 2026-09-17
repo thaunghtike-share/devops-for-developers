@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-second-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:thaunghtike-share/gitops-lab.git
+    targetRevision: main
+    path: kube-manifests/second-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default

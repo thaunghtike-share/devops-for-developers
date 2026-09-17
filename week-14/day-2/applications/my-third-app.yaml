@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-third-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:thaunghtike-share/gitops-lab.git
+    targetRevision: main
+    path: kube-manifests/third-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: third-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
