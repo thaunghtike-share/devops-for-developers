@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: gitops-demo
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - app: gitops-demo-app
+                - app: gitops-demo-backend
+                - app: gitops-demo-frontend
+          - list:
+              elements:
+                - env: dev
+                  valuesFile: values-dev.yaml
+                - env: uat
+                  valuesFile: values-uat.yaml
+                - env: production
+                  valuesFile: values-prod.yaml
+  template:
+    metadata:
+      name: '{{.app}}-{{.env}}'
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:thaunghtike-share/gitops-lab.git
+        targetRevision: main
+        path: 'helm-charts/{{.app}}'
+        helm:
+          valueFiles:
+            - '{{.valuesFile}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{.env}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
