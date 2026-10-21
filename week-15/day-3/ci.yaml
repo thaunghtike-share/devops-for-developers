@@ -1,0 +1,113 @@
+name: GitOps Demo App CI
+
+on:
+  push:
+    branches:
+      - dev
+      - uat
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: gitops-demo-app
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+
+jobs:
+  docker-ci:
+    name: Build and Push Docker Image
+    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set Up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Determine Environment
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
+            ENVIRONMENT=production
+            VALUES_FILE=values-prod.yaml
+
+          elif [[ "$GITHUB_REF" == "refs/heads/dev" ]]; then
+            ENVIRONMENT=dev
+            VALUES_FILE=values-dev.yaml
+
+          elif [[ "$GITHUB_REF" == "refs/heads/uat" ]]; then
+            ENVIRONMENT=uat
+            VALUES_FILE=values-uat.yaml
+
+          else
+            exit 1
+          fi
+
+          echo "ENVIRONMENT=$ENVIRONMENT" >> "$GITHUB_ENV"
+          echo "VALUES_FILE=$VALUES_FILE" >> "$GITHUB_ENV"
+          echo "IMAGE_TAG=$ENVIRONMENT-$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Ensure ECR Repository Exists
+        shell: bash
+        run: |
+          if ! aws ecr describe-repositories \
+            --repository-names "$ECR_REPOSITORY" >/dev/null 2>&1; then
+
+            aws ecr create-repository \
+              --repository-name "$ECR_REPOSITORY" \
+              --image-scanning-configuration scanOnPush=true \
+              --image-tag-mutability MUTABLE
+          fi
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and Push Docker Image
+        run: |
+          docker buildx build \
+            --platform linux/amd64 \
+            --push \
+            -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG" \
+            .
+
+      - name: Checkout GitOps Repository
+        uses: actions/checkout@v6
+        with:
+          repository: thaunghtike-share/gitops-lab ## Replace Your GitOps Repository
+          ref: main
+          path: gitops-lab
+          token: ${{ secrets.GITOPS_TOKEN }}
+
+      - name: Update Image Tag
+        uses: mikefarah/yq@v4.45.1
+        with:
+          cmd: >
+            yq -i
+            '.image.tag = strenv(IMAGE_TAG)'
+            gitops-lab/helm-charts/gitops-demo-app/${{ env.VALUES_FILE }}
+
+      - name: Push GitOps Changes
+        shell: bash
+        run: |
+          cd gitops-lab
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add helm-charts/gitops-demo-app/$VALUES_FILE
+
+          git commit -m "Update $ENVIRONMENT image tag to $IMAGE_TAG"
+
+          git push origin main
